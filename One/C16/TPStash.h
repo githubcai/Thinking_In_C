@@ -1,5 +1,6 @@
 #ifndef TPSTASH_H
 #define TPSTASH_H
+#include <cstring>
 
 template<class T, int incr=10>
 class PStash{
@@ -23,7 +24,7 @@ int PStash<T, incr>::add(T* element){
     if(next>=quantity){
         inflate(incr);
     }
-    sotrage[next++] = element;
+    storage[next++] = element;
     return (next-1);
 }
 
@@ -37,7 +38,32 @@ PStash<T, incr>::~PStash(){
 }
 
 template<class T, int incr>
-T* PStah<T, incr>::operator[](int index) const{
+T* PStash<T, incr>::operator[](int index) const{
+	require(index>=0, "PStash::operator[] index negative");
+	if(index>=next){
+		return 0;
+	}
+	require(storage[index]!=0, "PStash::operator[] returned null pointer");
+	return storage[index];
+}
 
+template<class T, int incr>
+T* PStash<T, incr>::remove(int index){
+	T* v=operator[](index);
+	if(v!=0){
+		storage[index] = 0;
+	}
+	return v;
+}
+
+template<class T, int incr>
+void PStash<T, incr>::inflate(int increase){
+	const int psz=sizeof(T*);
+	T** st=new T*[quantity+increase];
+	memset(st, 0, (quantity+increase)*psz);
+	memcpy(st, storage, quantity*psz);
+	quantity += increase;
+	delete []storage;
+	storage = st;
 }
 #endif //TPSTASH_H
