@@ -4,9 +4,10 @@
 template<class T, int ssize=100>
 class Stack{
 	T stack[ssize];
+    int top;
 public:
 	Stack() : top(0){}
-	void push(){const T& x}{
+	void push(const T& x){
 		require(top<ssize, "Too many push()es");
 		stack[top++] = x;
 	}
@@ -15,7 +16,7 @@ public:
 	}
 	T pop(){
 		require(top>0, "Too many pop()s");
-		return stack[--pop];
+		return stack[--top];
 	}
 };
 
