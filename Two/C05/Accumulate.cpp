@@ -8,7 +8,7 @@ struct Accumulate{
 
 template<template<int> class F>
 struct Accumulate<0, F>{
-    enum{val=F<0>::};
+    enum{val=F<0>::val};
 };
 
 template<int n>
@@ -19,6 +19,11 @@ struct Identity{
 template<int n>
 struct Square{
     enum{val=n*n};
+};
+
+template<int n>
+struct Cube{
+    enum{val = n*n*n};
 };
 
 int main(){
