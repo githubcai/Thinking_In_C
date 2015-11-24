@@ -11,7 +11,7 @@ void print(Iter first, Iter last, const char* nm="",
         os << nm << ": " << sep;
     }
     typedef typename std::iterator_traits<Iter>::value_type T;
-    std::copy(first, last, std::ostream_iterator<T>(std::cout, " "));
+    std::copy(first, last, std::ostream_iterator<T>(std::cout, sep));
     os << std::endl;
 }
 
